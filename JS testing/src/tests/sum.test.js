@@ -187,10 +187,10 @@ test("fetchDataAsyncWithError rejects with an error message", async () => {
 });
 
 // test 14 for done()
-test('the data is peanut butter', (done) => {
+test("the data is peanut butter", (done) => {
   function callback(data) {
     try {
-      expect(data).toBe('peanut butter');
+      expect(data).toBe("peanut butter");
       done();
     } catch (error) {
       done(error);
@@ -199,3 +199,53 @@ test('the data is peanut butter', (done) => {
 
   fetchDoneData(callback);
 });
+
+// MOCKING
+
+// test 15 to understand mock
+const generateUndefined = jest.fn();
+test("generateUndefined", () => {
+  expect(generateUndefined()).toBe(undefined);
+});
+
+const generateThree = jest.fn(() => 3);
+test("generateThree", () => {
+  expect(generateThree()).toBe(3);
+  expect(generateThree()).not.toBe(2);
+  expect(generateThree).toHaveBeenCalledTimes(2);
+});
+
+//  test 16 to understand different methods of mock
+const add = jest.fn((a, b) => a + b);
+test("add", () => {
+  expect(add(1, 2)).toBe(3);
+  expect(add(3, 2)).toBe(5);
+  expect(add).toHaveBeenCalledWith(1, 2);
+  expect(add).toHaveBeenLastCalledWith(3, 2);
+
+  expect(add.mock.calls.length).toBe(2);
+  expect(add.mock.calls[0]).toEqual([1, 2]);
+  expect(add.mock.calls[1]).toEqual([3, 2]);
+
+  expect(add.mock.results[0].value).toBe(3);
+  expect(add.mock.results[1].value).toBe(5);
+
+  expect(add).toHaveReturnedWith(3);
+  expect(add).toHaveReturnedWith(5);
+  expect(add).toHaveLastReturnedWith(5);
+  expect(add).toHaveNthReturnedWith(1, 3);  // First call returned 3
+  expect(add).toHaveNthReturnedWith(2, 5);  // Second call returned 5
+});
+
+// test 17 to see how mock reset works
+const simpleMock = jest.fn();
+test('before reset', () => {
+  simpleMock();
+  expect(simpleMock).toHaveBeenCalledTimes(1);
+
+})
+
+test('after reset', () => {
+  simpleMock.mockClear();
+  expect(simpleMock).toHaveBeenCalledTimes(0);
+})
