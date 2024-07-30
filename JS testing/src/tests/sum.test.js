@@ -8,19 +8,21 @@ const {
   fetchDoneData,
 } = require("../sum");
 
-// // test 1 using toBe
-// test("adds 1 + 2 which will be equal to 3", () => {
-//   expect(sum(1, 2)).toBe(3);
-// });
+// const {realFunc} = require("../mockExample");
 
-// // test 2 using not toBe
-// test("adding positive numbers is not zero", () => {
-//   for (let a = 1; a < 10; a++) {
-//     for (let b = 1; b < 10; b++) {
-//       expect(a + b).not.toBe(0);
-//     }
-//   }
-// });
+// test 1 using toBe
+test("adds 1 + 2 which will be equal to 3", () => {
+  expect(sum(1, 2)).toBe(3);
+});
+
+// test 2 using not toBe
+test("adding positive numbers is not zero", () => {
+  for (let a = 1; a < 10; a++) {
+    for (let b = 1; b < 10; b++) {
+      expect(a + b).not.toBe(0);
+    }
+  }
+});
 
 // test 3 using toEqual
 test("object assignment", () => {
@@ -244,8 +246,15 @@ test('before reset', () => {
   expect(simpleMock).toHaveBeenCalledTimes(1);
 
 })
-
 test('after reset', () => {
   simpleMock.mockClear();
   expect(simpleMock).toHaveBeenCalledTimes(0);
 })
+
+// test 18 for .mock example
+const mockExample = require("../mockExample")
+jest.mock("../mockExample");
+test('mocking a module realFunc from mockExample.js', () => {
+  mockExample.realFunc.mockImplementation(() => 'mocked');
+  expect(mockExample.realFunc()).toBe('mocked');
+});

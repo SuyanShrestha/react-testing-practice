@@ -37,17 +37,16 @@ async function fetchDataAsync() {
 async function fetchDataAsyncWithError() {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
-      reject('Error occurred asynchronously');
+      reject("Error occurred asynchronously");
     }, 1000);
   });
 }
 
 const fetchDoneData = (callback) => {
   setTimeout(() => {
-    callback('peanut butter');
+    callback("peanut butter");
   }, 1000);
 };
-
 
 module.exports = {
   sum,
